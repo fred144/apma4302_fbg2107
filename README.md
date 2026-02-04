@@ -23,7 +23,9 @@ not necesarily the same as number of cores
 want to do $e_N^x$ which is the Nth order approximation using taylor series
 this is  
 $$e_N^x = \sum_{n=0}^N \frac{x^n}{n!}$$
-$ = 1 + x + x^2/2! + \cdots + x^N/N!$
+
+$= 1 + x + x^2/2! + \cdots + x^N/N!$
+
 do two things:
 
 1. pass in two things from the command line: x and N over P processes
@@ -61,5 +63,27 @@ while (1.0 + eps / 2.0 != 1.0) {
 }
 printf("Machine epsilon: %e\n", eps);
 ```
+
+
+# 02/03/2026
+
+- git add tag for final submission
+- do survery
+- for the hw1, make sure to include relative error calculation
+
+## HPC for linear algebra
+1. motivate 2pt BVP
+2. Petsc, VEC, MAT
+3. Direct methodsL LU, SparseLU
+4. Iterative methods: Preconditioned (PC objects) Krylov Subspace (KSPs) methods
+
+
+### Linear 2 pt BVP
+$$ \dfrac{- d^2 u}{d x^2} + \gamma u = f(x) $$
+
+for some $x \in [a,b]$
+with boundary conditions $u(a) = u_a$, $u(b) = u_b$
+
+we are apprximating $u(x) \sim u \in R^{N+1}$
 
 
