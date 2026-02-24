@@ -1,0 +1,11 @@
+BVP: m=201  N=202  h=4.975124e-03  gamma=0.00  k=5.0  c=3.00
+  0 KSP Residual norm 2.155577866517e+04
+  1 KSP Residual norm 7.523879334287e-11
+  Linear solve converged due to CONVERGED_ITS iterations 1
+KSP converged reason: CONVERGED_ITS
+m=201  h=4.975124e-03  ||u-uexact||/||uexact|| = 4.988274e-04
+WARNING! There are options you set that were not used!
+WARNING! could be spelling mistake, etc!
+There are 2 unused database options. They are:
+Option left: name:-ksp_atol value: 1.e-10 source: file
+Option left: name:-ksp_rtol value: 1.e-8 source: file

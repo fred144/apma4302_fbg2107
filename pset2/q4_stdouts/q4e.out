@@ -1,0 +1,12 @@
+BVP: m=201  N=202  h=4.975124e-03  gamma=0.00  k=5.0  c=3.00
+  0 KSP Residual norm 1.031869692986e+01
+  1 KSP Residual norm 5.111556912929e-01
+  2 KSP Residual norm 2.252222474944e-01
+  3 KSP Residual norm 2.945416380291e-02
+  4 KSP Residual norm 5.768915965017e-03
+  5 KSP Residual norm 3.721823976221e-03
+  6 KSP Residual norm 3.625002529575e-04
+  7 KSP Residual norm 5.308486755828e-10
+  Linear solve converged due to CONVERGED_RTOL iterations 7
+KSP converged reason: CONVERGED_RTOL
+m=201  h=4.975124e-03  ||u-uexact||/||uexact|| = 4.988273e-04

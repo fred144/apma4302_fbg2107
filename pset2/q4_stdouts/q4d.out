@@ -1,0 +1,6 @@
+BVP: m=201  N=202  h=4.975124e-03  gamma=0.00  k=5.0  c=3.00
+  0 KSP Residual norm 1.023632379439e+01
+  1 KSP Residual norm 6.221130914797e-13
+  Linear solve converged due to CONVERGED_ATOL iterations 1
+KSP converged reason: CONVERGED_ATOL
+m=201  h=4.975124e-03  ||u-uexact||/||uexact|| = 4.988274e-04
