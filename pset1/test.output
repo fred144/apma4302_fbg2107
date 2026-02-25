@@ -1,0 +1,266 @@
+mpicc -o expx.o -c -fPIC -Wall -Wwrite-strings -Wno-unknown-pragmas -Wconversion -Wno-sign-conversion -Wno-float-conversion -Wno-implicit-float-conversion -fstack-protector -fno-stack-check -Qunused-arguments -fvisibility=hidden -O3 -march=native -pedantic -std=c99 -I/Users/mspieg/Repos/gitlab/petsc/include -I/Users/mspieg/Repos/gitlab/petsc/apma4302-pkgs-opt/include -I/opt/X11/include    expx.c
+mpicc -Wl,-commons,use_dylibs -Wl,-search_paths_first -Wl,-no_compact_unwind -Wl,-no_warn_duplicate_libraries  -fPIC -Wall -Wwrite-strings -Wno-unknown-pragmas -Wconversion -Wno-sign-conversion -Wno-float-conversion -Wno-implicit-float-conversion -fstack-protector -fno-stack-check -Qunused-arguments -fvisibility=hidden -O3 -march=native -pedantic -std=c99 -o expx expx.o  -Wl,-rpath,/Users/mspieg/Repos/gitlab/petsc/apma4302-pkgs-opt/lib -L/Users/mspieg/Repos/gitlab/petsc/apma4302-pkgs-opt/lib -Wl,-rpath,/opt/X11/lib -L/opt/X11/lib -Wl,-rpath,/opt/homebrew/Cellar/open-mpi/5.0.9/lib -L/opt/homebrew/Cellar/open-mpi/5.0.9/lib -Wl,-rpath,/opt/homebrew/Cellar/gcc/15.2.0/lib/gcc/current/gcc/aarch64-apple-darwin24/15 -L/opt/homebrew/Cellar/gcc/15.2.0/lib/gcc/current/gcc/aarch64-apple-darwin24/15 -Wl,-rpath,/opt/homebrew/Cellar/gcc/15.2.0/lib/gcc/current/gcc -L/opt/homebrew/Cellar/gcc/15.2.0/lib/gcc/current/gcc -Wl,-rpath,/opt/homebrew/Cellar/gcc/15.2.0/lib/gcc/current -L/opt/homebrew/Cellar/gcc/15.2.0/lib/gcc/current -lpetsc -lHYPRE -ldmumps -lmumps_common -lpord -lpthread -lscalapack -llapack -lblas -lhdf5_hl -lhdf5 -lparmetis -lmetis -lX11 -lmpi_usempif08 -lmpi_usempi_ignore_tkr -lmpi_mpifh -lmpi -lgfortran -lemutls_w -lheapt_w -lgfortran -lquadmath -lc++
+/bin/rm -f expx.o
+Compiling expx code...
+Compilation successful!
+Running basic functionality tests...
+Testing with x = -709.0, N = 2866
+	np=1, result=using blocked Horner: exp(-709.) = 0.00000000000000000000000000000000e+00 (N=2866)
+using exact: exp(-709.) = 1.21678075062342292764153402116133e-308
+relative error: 1.000e+00 = 4.504e+15  [machine eps]
+
+	np=2, result=using blocked Horner: exp(-709.) = 0.00000000000000000000000000000000e+00 (N=2866)
+using exact: exp(-709.) = 1.21678075062342292764153402116133e-308
+relative error: 1.000e+00 = 4.504e+15  [machine eps]
+
+	np=4, result=using blocked Horner: exp(-709.) = 0.00000000000000000000000000000000e+00 (N=2866)
+using exact: exp(-709.) = 1.21678075062342292764153402116133e-308
+relative error: 1.000e+00 = 4.504e+15  [machine eps]
+
+	np=8, result=using blocked Horner: exp(-709.) = 0.00000000000000000000000000000000e+00 (N=2866)
+using exact: exp(-709.) = 1.21678075062342292764153402116133e-308
+relative error: 1.000e+00 = 4.504e+15  [machine eps]
+
+Testing with x = -500.0, N = 2030
+	np=1, result=using blocked Horner: exp(-500.) = 0.00000000000000000000000000000000e+00 (N=2030)
+using exact: exp(-500.) = 7.12457640674128551658854708096207e-218
+relative error: 1.000e+00 = 4.504e+15  [machine eps]
+
+	np=2, result=using blocked Horner: exp(-500.) = 0.00000000000000000000000000000000e+00 (N=2030)
+using exact: exp(-500.) = 7.12457640674128551658854708096207e-218
+relative error: 1.000e+00 = 4.504e+15  [machine eps]
+
+	np=4, result=using blocked Horner: exp(-500.) = 0.00000000000000000000000000000000e+00 (N=2030)
+using exact: exp(-500.) = 7.12457640674128551658854708096207e-218
+relative error: 1.000e+00 = 4.504e+15  [machine eps]
+
+	np=8, result=using blocked Horner: exp(-500.) = 0.00000000000000000000000000000000e+00 (N=2030)
+using exact: exp(-500.) = 7.12457640674128551658854708096207e-218
+relative error: 1.000e+00 = 4.504e+15  [machine eps]
+
+Testing with x = -100.0, N = 430
+	np=1, result=using blocked Horner: exp(-100.) = 0.00000000000000000000000000000000e+00 (N=430)
+using exact: exp(-100.) = 3.72007597602083612000994488118320e-44
+relative error: 1.000e+00 = 4.504e+15  [machine eps]
+
+	np=2, result=using blocked Horner: exp(-100.) = 0.00000000000000000000000000000000e+00 (N=430)
+using exact: exp(-100.) = 3.72007597602083612000994488118320e-44
+relative error: 1.000e+00 = 4.504e+15  [machine eps]
+
+	np=4, result=using blocked Horner: exp(-100.) = 4.95049504950494928287320222984351e-217 (N=430)
+using exact: exp(-100.) = 3.72007597602083612000994488118320e-44
+relative error: 1.000e+00 = 4.504e+15  [machine eps]
+
+	np=8, result=using blocked Horner: exp(-100.) = 1.66112956810631222510404230199009e-109 (N=430)
+using exact: exp(-100.) = 3.72007597602083612000994488118320e-44
+relative error: 1.000e+00 = 4.504e+15  [machine eps]
+
+Testing with x = -50.0, N = 230
+	np=1, result=using blocked Horner: exp(-50.) = 0.00000000000000000000000000000000e+00 (N=230)
+using exact: exp(-50.) = 1.92874984796391782056344388776711e-22
+relative error: 1.000e+00 = 4.504e+15  [machine eps]
+
+	np=2, result=using blocked Horner: exp(-50.) = 2.07691874341392995968138840499328e-196 (N=230)
+using exact: exp(-50.) = 1.92874984796391782056344388776711e-22
+relative error: 1.000e+00 = 4.504e+15  [machine eps]
+
+	np=4, result=using blocked Horner: exp(-50.) = 1.41289400074368463732000499853009e-99 (N=230)
+using exact: exp(-50.) = 1.92874984796391782056344388776711e-22
+relative error: 1.000e+00 = 4.504e+15  [machine eps]
+
+	np=8, result=using blocked Horner: exp(-50.) = 8.88859125827814518495145044357274e-51 (N=230)
+using exact: exp(-50.) = 1.92874984796391782056344388776711e-22
+relative error: 1.000e+00 = 4.504e+15  [machine eps]
+
+Testing with x = -10.0, N = 70
+	np=1, result=using blocked Horner: exp(-10.) = 9.99999999999999191360160141849845e-71 (N=70)
+using exact: exp(-10.) = 4.53999297624848541731455708880816e-05
+relative error: 1.000e+00 = 4.504e+15  [machine eps]
+
+	np=2, result=using blocked Horner: exp(-10.) = 5.00000000000000003928772597291190e-36 (N=70)
+using exact: exp(-10.) = 4.53999297624848541731455708880816e-05
+relative error: 1.000e+00 = 4.504e+15  [machine eps]
+
+	np=4, result=using blocked Horner: exp(-10.) = 4.54545454545450130826502985210814e-19 (N=70)
+using exact: exp(-10.) = 4.53999297624848541731455708880816e-05
+relative error: 1.000e+00 = 4.504e+15  [machine eps]
+
+	np=8, result=using blocked Horner: exp(-10.) = 1.61290196392328019220827298653052e-10 (N=70)
+using exact: exp(-10.) = 4.53999297624848541731455708880816e-05
+relative error: 1.000e+00 = 4.504e+15  [machine eps]
+
+Testing with x = -1.0, N = 34
+	np=1, result=using blocked Horner: exp(-1.) = 2.68941421369995103951566761679715e-01 (N=34)
+using exact: exp(-1.) = 3.67879441171442334024277442949824e-01
+relative error: 2.689e-01 = 1.211e+15  [machine eps]
+
+	np=2, result=using blocked Horner: exp(-1.) = 2.11941557617085440945459140493767e-01 (N=34)
+using exact: exp(-1.) = 3.67879441171442334024277442949824e-01
+relative error: 4.239e-01 = 1.909e+15  [machine eps]
+
+	np=4, result=using blocked Horner: exp(-1.) = 1.48847581202077555717622203701467e-01 (N=34)
+using exact: exp(-1.) = 3.67879441171442334024277442949824e-01
+relative error: 5.954e-01 = 2.681e+15  [machine eps]
+
+	np=8, result=using blocked Horner: exp(-1.) = 9.32985357172464724317961781707709e-02 (N=34)
+using exact: exp(-1.) = 3.67879441171442334024277442949824e-01
+relative error: 7.464e-01 = 3.361e+15  [machine eps]
+
+Testing with x = -0.1, N = 30
+	np=1, result=using blocked Horner: exp(-0.1) = 9.04837418035959517581545696884859e-01 (N=30)
+using exact: exp(-0.1) = 9.04837418035959517581545696884859e-01
+relative error: 0.000e+00 = 0.000e+00  [machine eps]
+
+	np=2, result=using blocked Horner: exp(-0.1) = 9.04837418035327911702836445329012e-01 (N=30)
+using exact: exp(-0.1) = 9.04837418035959517581545696884859e-01
+relative error: 6.980e-13 = 3.144e+03  [machine eps]
+
+	np=4, result=using blocked Horner: exp(-0.1) = 9.04672767947335421112597941828426e-01 (N=30)
+using exact: exp(-0.1) = 9.04837418035959517581545696884859e-01
+relative error: 1.820e-04 = 8.195e+11  [machine eps]
+
+	np=8, result=using blocked Horner: exp(-0.1) = 7.82032642683831991092802127241157e-01 (N=30)
+using exact: exp(-0.1) = 9.04837418035959517581545696884859e-01
+relative error: 1.357e-01 = 6.112e+14  [machine eps]
+
+Testing with x = 0.0, N = 30
+	np=1, result=using blocked Horner: exp(0.) = 1.00000000000000000000000000000000e+00 (N=30)
+using exact: exp(0.) = 1.00000000000000000000000000000000e+00
+relative error: 0.000e+00 = 0.000e+00  [machine eps]
+
+	np=2, result=using blocked Horner: exp(0.) = 1.00000000000076472161936180782504e+00 (N=30)
+using exact: exp(0.) = 1.00000000000000000000000000000000e+00
+relative error: 7.647e-13 = 3.444e+03  [machine eps]
+
+	np=4, result=using blocked Horner: exp(0.) = 1.00019841269917741932715671282494e+00 (N=30)
+using exact: exp(0.) = 1.00000000000000000000000000000000e+00
+relative error: 1.984e-04 = 8.936e+11  [machine eps]
+
+	np=8, result=using blocked Horner: exp(0.) = 1.16686510441795254777730406203773e+00 (N=30)
+using exact: exp(0.) = 1.00000000000000000000000000000000e+00
+relative error: 1.669e-01 = 7.515e+14  [machine eps]
+
+Testing with x = 0.1, N = 30
+	np=1, result=using blocked Horner: exp(0.1) = 1.10517091807564771244187795673497e+00 (N=30)
+using exact: exp(0.1) = 1.10517091807564771244187795673497e+00
+relative error: 0.000e+00 = 0.000e+00  [machine eps]
+
+	np=2, result=using blocked Horner: exp(0.1) = 1.10517091807641909539938751549926e+00 (N=30)
+using exact: exp(0.1) = 1.10517091807564771244187795673497e+00
+relative error: 6.980e-13 = 3.143e+03  [machine eps]
+
+	np=4, result=using blocked Horner: exp(0.1) = 1.10537205874888666556898897397332e+00 (N=30)
+using exact: exp(0.1) = 1.10517091807564771244187795673497e+00
+relative error: 1.820e-04 = 8.197e+11  [machine eps]
+
+	np=8, result=using blocked Horner: exp(0.1) = 1.27871900150885386970855961408233e+00 (N=30)
+using exact: exp(0.1) = 1.10517091807564771244187795673497e+00
+relative error: 1.570e-01 = 7.072e+14  [machine eps]
+
+Testing with x = 1.0, N = 34
+	np=1, result=using blocked Horner: exp(1.) = 3.71828182845904553488480814849027e+00 (N=34)
+using exact: exp(1.) = 2.71828182845904509079559829842765e+00
+relative error: 3.679e-01 = 1.657e+15  [machine eps]
+
+	np=2, result=using blocked Horner: exp(1.) = 4.71828182845904553488480814849027e+00 (N=34)
+using exact: exp(1.) = 2.71828182845904509079559829842765e+00
+relative error: 7.358e-01 = 3.314e+15  [machine eps]
+
+	np=4, result=using blocked Horner: exp(1.) = 6.71828182845904642306322784861550e+00 (N=34)
+using exact: exp(1.) = 2.71828182845904509079559829842765e+00
+relative error: 1.472e+00 = 6.627e+15  [machine eps]
+
+	np=8, result=using blocked Horner: exp(1.) = 1.07182818284590446467063884483650e+01 (N=34)
+using exact: exp(1.) = 2.71828182845904509079559829842765e+00
+relative error: 2.943e+00 = 1.325e+16  [machine eps]
+
+Testing with x = 10.0, N = 70
+	np=1, result=using blocked Horner: exp(10.) = 1.00000000000000083877920681447366e+70 (N=70)
+using exact: exp(10.) = 2.20264657948067178949713706970215e+04
+relative error: 4.540e+65 = 2.045e+81  [machine eps]
+
+	np=2, result=using blocked Horner: exp(10.) = 1.99999999999999993726732215835951e+35 (N=70)
+using exact: exp(10.) = 2.20264657948067178949713706970215e+04
+relative error: 9.080e+30 = 4.089e+46  [machine eps]
+
+	np=4, result=using blocked Horner: exp(10.) = 2.20000000000002150400000000000000e+18 (N=70)
+using exact: exp(10.) = 2.20264657948067178949713706970215e+04
+relative error: 9.988e+13 = 4.498e+29  [machine eps]
+
+	np=8, result=using blocked Horner: exp(10.) = 6.20000485068270587921142578125000e+09 (N=70)
+using exact: exp(10.) = 2.20264657948067178949713706970215e+04
+relative error: 2.815e+05 = 1.268e+21  [machine eps]
+
+Testing with x = 50.0, N = 230
+	np=1, result=using blocked Horner: exp(50.) = inf (N=230)
+using exact: exp(50.) = 5.18470552858707204505600000000000e+21
+relative error: inf = inf  [machine eps]
+
+	np=2, result=using blocked Horner: exp(50.) = 4.81482486096809218679272075600342e+195 (N=230)
+using exact: exp(50.) = 5.18470552858707204505600000000000e+21
+relative error: 9.287e+173 = 4.182e+189  [machine eps]
+
+	np=4, result=using blocked Horner: exp(50.) = 7.07767178198537487657717882939553e+98 (N=230)
+using exact: exp(50.) = 5.18470552858707204505600000000000e+21
+relative error: 1.365e+77 = 6.148e+92  [machine eps]
+
+	np=8, result=using blocked Horner: exp(50.) = 1.12503767013549807400729134913290e+50 (N=230)
+using exact: exp(50.) = 5.18470552858707204505600000000000e+21
+relative error: 2.170e+28 = 9.772e+43  [machine eps]
+
+Testing with x = 100.0, N = 430
+	np=1, result=using blocked Horner: exp(100.) = inf (N=430)
+using exact: exp(100.) = 2.68811714181613560942534004359629e+43
+relative error: inf = inf  [machine eps]
+
+	np=2, result=using blocked Horner: exp(100.) = inf (N=430)
+using exact: exp(100.) = 2.68811714181613560942534004359629e+43
+relative error: inf = inf  [machine eps]
+
+	np=4, result=using blocked Horner: exp(100.) = 2.02000000000000034332812763300698e+216 (N=430)
+using exact: exp(100.) = 2.68811714181613560942534004359629e+43
+relative error: 7.515e+172 = 3.384e+188  [machine eps]
+
+	np=8, result=using blocked Horner: exp(100.) = 6.02000000000000047062934718250751e+108 (N=430)
+using exact: exp(100.) = 2.68811714181613560942534004359629e+43
+relative error: 2.239e+65 = 1.009e+81  [machine eps]
+
+Testing with x = 500.0, N = 2030
+	np=1, result=using blocked Horner: exp(500.) = inf (N=2030)
+using exact: exp(500.) = 1.40359221785283751360211025475364e+217
+relative error: inf = inf  [machine eps]
+
+	np=2, result=using blocked Horner: exp(500.) = inf (N=2030)
+using exact: exp(500.) = 1.40359221785283751360211025475364e+217
+relative error: inf = inf  [machine eps]
+
+	np=4, result=using blocked Horner: exp(500.) = inf (N=2030)
+using exact: exp(500.) = 1.40359221785283751360211025475364e+217
+relative error: inf = inf  [machine eps]
+
+	np=8, result=using blocked Horner: exp(500.) = inf (N=2030)
+using exact: exp(500.) = 1.40359221785283751360211025475364e+217
+relative error: inf = inf  [machine eps]
+
+Testing with x = 709.0, N = 2866
+	np=1, result=using blocked Horner: exp(709.) = inf (N=2866)
+using exact: exp(709.) = 8.21840746155497238483792315622553e+307
+relative error: inf = inf  [machine eps]
+
+	np=2, result=using blocked Horner: exp(709.) = inf (N=2866)
+using exact: exp(709.) = 8.21840746155497238483792315622553e+307
+relative error: inf = inf  [machine eps]
+
+	np=4, result=using blocked Horner: exp(709.) = inf (N=2866)
+using exact: exp(709.) = 8.21840746155497238483792315622553e+307
+relative error: inf = inf  [machine eps]
+
+	np=8, result=using blocked Horner: exp(709.) = inf (N=2866)
+using exact: exp(709.) = 8.21840746155497238483792315622553e+307
+relative error: inf = inf  [machine eps]
+
+Some comments: 17/20
+	Actually the negative x hack isn't cheeky, it's exactly the right thing to do in this case
+	Unfortunately, there is something funky in the algorith as it's generating much larger numbers than it should
+	and it generates different numbers for different numbers of processors.
+
