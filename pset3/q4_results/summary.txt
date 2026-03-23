@@ -1,0 +1,10 @@
+Q4 SUMMARY
+------------------------------------------
+Final nonlinear residual ||F(u)||_2 = 9.421974587678e-15
+Newton iterations = 1
+Final relative error (nonlinear) = 5.245152e-04
+Final relative error (linear ref) = 5.245152e-04
+Absolute difference in relative error = 0
+
+Linear iterations at each Newton step (from nonlinear run):
+  Newton step 1: 1

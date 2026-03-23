@@ -1,0 +1,54 @@
+==========================================
+Q7: nonlinearity comparison
+==========================================
+
+  Case 1: gamma=0   (linear, baseline)
+  Case 2: gamma=100, p=3 (nonlinear)
+
+==========================================
+CASE 1: Linear (gamma=0)
+==========================================
+
+  0 SNES Function norm 2.164823134561e-04
+    0 KSP Residual norm 1.251432131929e-02
+    1 KSP Residual norm 9.754366535139e-17
+  1 SNES Function norm 9.449988262009e-15
+on 65 x 65 grid:  relative error |u-u_exact|_2/|u_exact|_2 = 5.245152e-04
+
+Saved: case1_gamma0.vtr
+
+case 1 Summary:
+  iterations: 2
+  final residual:    9.449988262009e-15
+  relative error:    5.245152e-04
+
+==========================================
+CASE 2: Nonlinear (gamma=100, p=3)
+==========================================
+
+  0 SNES Function norm 3.390025505883e-01
+    0 KSP Residual norm 6.779017350943e+00
+    1 KSP Residual norm 1.381247071966e-14
+  1 SNES Function norm 7.371394081293e-02
+    0 KSP Residual norm 2.602724852393e+00
+    1 KSP Residual norm 4.629061438794e-15
+  2 SNES Function norm 7.716627838082e-03
+    0 KSP Residual norm 3.596283894440e-01
+    1 KSP Residual norm 2.399165136781e-15
+  3 SNES Function norm 1.235572885638e-04
+    0 KSP Residual norm 6.209502652869e-03
+    1 KSP Residual norm 1.667032766888e-17
+  4 SNES Function norm 3.479484959083e-08
+    0 KSP Residual norm 1.821423690297e-06
+    1 KSP Residual norm 5.845001809795e-21
+  5 SNES Function norm 6.981653327578e-15
+on 65 x 65 grid:  relative error |u-u_exact|_2/|u_exact|_2 = 4.077787e-01
+
+saved: case2_gamma100.vtr
+
+case 2 Summary:
+  iterations: 6
+  final residual:    6.981653327578e-15
+  relative error:    4.077787e-01
+
+==========================================

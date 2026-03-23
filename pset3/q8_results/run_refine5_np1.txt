@@ -1,0 +1,4 @@
+  0 SNES Function norm 3.393927435307e-06
+  1 SNES Function norm 1.854689499302e-11
+  2 SNES Function norm 3.689621126629e-14
+on 257 x 257 grid:  relative error |u-u_exact|_2/|u_exact|_2 = 1.266573e-05

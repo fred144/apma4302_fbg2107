@@ -1,0 +1,7 @@
+  0 SNES Function norm 2.164823134561e-04
+    0 KSP Residual norm 1.251432131929e-02
+    1 KSP Residual norm 6.368810917573e-17
+    Linear solve converged due to CONVERGED_ATOL iterations 1
+  1 SNES Function norm 9.421974587678e-15
+  Nonlinear solve converged due to CONVERGED_ITS iterations 1
+on 65 x 65 grid:  relative error |u-u_exact|_2/|u_exact|_2 = 5.245152e-04

@@ -1,0 +1,8 @@
+  0 SNES Function norm 2.164823134561e-04
+    0 KSP Residual norm 4.831257372533e-03
+    1 KSP Residual norm 1.423797940814e-17
+  1 SNES Function norm 1.898785212030e-08
+    0 KSP Residual norm 5.881702855457e-07
+    1 KSP Residual norm 5.999690231880e-22
+  2 SNES Function norm 9.353454317884e-15
+on 65 x 65 grid:  relative error |u-u_exact|_2/|u_exact|_2 = 2.025079e-04

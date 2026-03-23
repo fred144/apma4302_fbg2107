@@ -1,0 +1,4 @@
+# Newton_Iteration  SNES_Residual_Norm
+0 2.164823134561e-04
+1 1.898785212030e-08
+2 9.353454317884e-15

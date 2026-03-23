@@ -1,0 +1,16 @@
+# qestion 5: Finite-difference Jacobian (colored)
+
+-rct_gamma 0
+-da_refine 3
+
+# finite-difference colored Jacobian
+-snes_fd_color
+
+# direct solver
+-pc_type lu
+-pc_factor_mat_solver_type mumps
+
+# monitoring and timing
+-snes_monitor
+-ksp_monitor
+-log_view

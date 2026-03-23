@@ -1,0 +1,24 @@
+# Question 4: gamma=0 linear problem, 65x65 grid
+# converges in 1 Newton iteration with direct solver
+
+-rct_gamma 0
+-da_grid_x 9
+-da_grid_y 9
+-da_refine 3
+
+# direct solver (MUMPS)
+-ksp_type gmres
+-pc_type lu
+-pc_factor_mat_solver_type mumps
+-ksp_rtol 1e-12
+-ksp_atol 1e-14
+
+# nonlinear stopping: target ||F(u)||_2 < 1e-10
+-snes_atol 1e-10
+-snes_rtol 0
+
+# monitoring
+-snes_monitor
+-ksp_monitor
+-snes_converged_reason
+-ksp_converged_reason
