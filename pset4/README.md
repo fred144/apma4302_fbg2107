@@ -1,6 +1,6 @@
 The following directories  hold each question's results, and the .sh files are the scripts I used to run the simulations. 
 
-
+some of the vtk folders were removed for space
 
 The STDOUT_Q2_* files are the captured standard output from running those scripts, which include the Nu vs time data that I plotted in the writeup. 
 
