@@ -1,0 +1,12 @@
+firedrake:WARNING OMP_NUM_THREADS is not set or is set to a value greater than 1, we suggest setting OMP_NUM_THREADS=1 to improve performance
+    Residual norms for firedrake_0_ solve.
+    0 KSP Residual norm 9.060120519062e-04
+    1 KSP Residual norm 3.189880622007e-05
+    2 KSP Residual norm 2.658205804061e-07
+    3 KSP Residual norm 6.521950442542e-09
+    4 KSP Residual norm 1.641888146219e-10
+Solve time: 7.6191 s
+
+working on 513x513 mesh with split_mg preconditioner and fgmres solver
+L2 error (vorticity) -- abs: 1.497e-07, rel: 5.718e-05
+L2 error (streamfun) -- abs: 7.470e-09, rel: 1.464e-04

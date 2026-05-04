@@ -1,0 +1,41 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyperFirstAtBeginDocument{\AtBeginDocument}
+\HyperFirstAtBeginDocument{\ifx\hyper@anchor\@undefined
+\global\let\oldcontentsline\contentsline
+\gdef\contentsline#1#2#3#4{\oldcontentsline{#1}{#2}{#3}}
+\global\let\oldnewlabel\newlabel
+\gdef\newlabel#1#2{\newlabelxx{#1}#2}
+\gdef\newlabelxx#1#2#3#4#5#6{\oldnewlabel{#1}{{#2}{#3}}}
+\AtEndDocument{\ifx\hyper@anchor\@undefined
+\let\contentsline\oldcontentsline
+\let\newlabel\oldnewlabel
+\fi}
+\fi}
+\global\let\hyper@last\relax 
+\gdef\HyperFirstAtBeginDocument#1{#1}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\newlabel{eq:stokes}{{3}{1}{}{equation.0.3}{}}
+\newlabel{eq:incompressibility}{{4}{1}{}{equation.0.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Question 1: rewriting the governing equations}{1}{section.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2}Question 2: fieldsplit preconditioner}{3}{section.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}(a) comparing different options biharm.c}{3}{subsection.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}(b) comparing different options biharm.py in firedrake}{4}{subsection.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}(c) picking split\_mg to compare where the principle differnces in run time are coming from}{4}{subsection.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3}Question 3: biharm with a different RHS}{5}{section.3}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces The solution of this temperature-driven biharmonic problem. Looks like a Jean's instability about to form or Rayleigh-Benard convection, basically a sinusoidal perturbation in the temperature field that drives a flow.}}{6}{figure.1}\protected@file@percent }
+\newlabel{fig:q3_biharm_temp}{{1}{6}{The solution of this temperature-driven biharmonic problem. Looks like a Jean's instability about to form or Rayleigh-Benard convection, basically a sinusoidal perturbation in the temperature field that drives a flow}{figure.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Question 4: convection.py}{6}{section.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}(a) $Ra = 10^2$}{6}{subsection.4.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces The value of the Nusselt number over time for $Ra = 10^2$ on a 64x64 mesh. We see that the system reaches a steady state where Nu is approximately 1, after dipping to 0.5 near 10 and rises back to 1. This is consistent with the fact that $Ra = 10^2$ is below the critical Rayleigh number for convection, so the system is stable and heat is transferred primarily through conduction, which corresponds to Nu = 1. The initial dip in Nu could be due to the initial perturbation in the temperature field, but as the system evolves, it settles back to the conductive state.}}{7}{figure.2}\protected@file@percent }
+\newlabel{fig:q4a_Ra1e2}{{2}{7}{The value of the Nusselt number over time for $Ra = 10^2$ on a 64x64 mesh. We see that the system reaches a steady state where Nu is approximately 1, after dipping to 0.5 near 10 and rises back to 1. This is consistent with the fact that $Ra = 10^2$ is below the critical Rayleigh number for convection, so the system is stable and heat is transferred primarily through conduction, which corresponds to Nu = 1. The initial dip in Nu could be due to the initial perturbation in the temperature field, but as the system evolves, it settles back to the conductive state}{figure.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}(b) $Ra = 10^4, 10^5, 10^6$}{7}{subsection.4.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces The value of the Nu over time for $Ra = 10^2, 10^4, 10^5, 10^6$ on a 64x64 mesh. We see that as we increase $Ra$, the Nusselt number over time changes in shape. the initial dip in Nu shifts to later times, and the dip decreases. The wiggles in the solution also become more pronounced as we increase $Ra$, which could be due to the more vigorous convection and the complex flow patterns that develop at higher Rayleigh numbers. For $Ra = 10^2$, the system reaches a steady state where Nu is approximately 1, which is consistent with the fact that $Ra = 10^2$ is below the critical Rayleigh number for convection, so the system is stable and heat is transferred primarily through conduction. For $Ra = 10^6$, there is a sharp rise followed by a dip to negative values, which could be due to the initial conditions or the transient behavior of the system as it transitions to a convective state. The negative values of Nu could indicate that there are regions in the flow where heat is being transferred in the opposite direction, which can happen in complex convective flows. This run (red line) is also very slow.}}{9}{figure.3}\protected@file@percent }
+\newlabel{fig:q4a_Ra1e2}{{3}{9}{The value of the Nu over time for $Ra = 10^2, 10^4, 10^5, 10^6$ on a 64x64 mesh. We see that as we increase $Ra$, the Nusselt number over time changes in shape. the initial dip in Nu shifts to later times, and the dip decreases. The wiggles in the solution also become more pronounced as we increase $Ra$, which could be due to the more vigorous convection and the complex flow patterns that develop at higher Rayleigh numbers. For $Ra = 10^2$, the system reaches a steady state where Nu is approximately 1, which is consistent with the fact that $Ra = 10^2$ is below the critical Rayleigh number for convection, so the system is stable and heat is transferred primarily through conduction. For $Ra = 10^6$, there is a sharp rise followed by a dip to negative values, which could be due to the initial conditions or the transient behavior of the system as it transitions to a convective state. The negative values of Nu could indicate that there are regions in the flow where heat is being transferred in the opposite direction, which can happen in complex convective flows. This run (red line) is also very slow}{figure.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces The end value of the Nusselt number for $Ra = 10^4$ as a function of mesh size. For some reason, Nu is relatively stable at 1.0 across all mesh sizes, which is unexpected since we should see some increase in Nu due to convection.}}{10}{figure.4}\protected@file@percent }
+\newlabel{fig:q4a_Ra1e2}{{4.3}{10}{(c) $Ra = 10^4$ for $N = 16, 32, 64, 128$}{figure.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}(c) $Ra = 10^4$ for $N = 16, 32, 64, 128$}{10}{subsection.4.3}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces The value of the Nusselt number over time for $Ra = 10^4$ for different mesh sizes. We see that as we increase the mesh size, the Nusselt number seems to be unchanged, apart from the feature past 1e3.}}{11}{figure.5}\protected@file@percent }
+\newlabel{fig:q4a_Ra1e2}{{5}{11}{The value of the Nusselt number over time for $Ra = 10^4$ for different mesh sizes. We see that as we increase the mesh size, the Nusselt number seems to be unchanged, apart from the feature past 1e3}{figure.5}{}}
+\gdef \@abspage@last{11}

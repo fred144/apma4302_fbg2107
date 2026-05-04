@@ -1,0 +1,53 @@
+running direct solver...
+firedrake:WARNING OMP_NUM_THREADS is not set or is set to a value greater than 1, we suggest setting OMP_NUM_THREADS=1 to improve performance
+    Residual norms for firedrake_0_ solve.
+    0 KSP Residual norm 9.060120519062e-04
+    1 KSP Residual norm 7.634220136544e-16
+Solve time: 7.2424 s
+
+working on 513x513 mesh with monolithic preconditioner and preonly solver
+L2 error (vorticity) -- abs: 1.497e-07, rel: 5.720e-05
+L2 error (streamfun) -- abs: 7.472e-09, rel: 1.464e-04
+running fieldsplit + direct...
+firedrake:WARNING OMP_NUM_THREADS is not set or is set to a value greater than 1, we suggest setting OMP_NUM_THREADS=1 to improve performance
+    Residual norms for firedrake_0_ solve.
+    0 KSP Residual norm 9.060120519062e-04
+    1 KSP Residual norm 7.874255346685e-16
+Solve time: 6.1789 s
+
+working on 513x513 mesh with split_direct preconditioner and fgmres solver
+L2 error (vorticity) -- abs: 1.497e-07, rel: 5.720e-05
+L2 error (streamfun) -- abs: 7.472e-09, rel: 1.464e-04
+running fieldsplit + multigrid...
+firedrake:WARNING OMP_NUM_THREADS is not set or is set to a value greater than 1, we suggest setting OMP_NUM_THREADS=1 to improve performance
+    Residual norms for firedrake_0_ solve.
+    0 KSP Residual norm 9.060120519062e-04
+    1 KSP Residual norm 3.189880622007e-05
+    2 KSP Residual norm 2.658205804061e-07
+    3 KSP Residual norm 6.521950442542e-09
+    4 KSP Residual norm 1.641888146219e-10
+Solve time: 7.6191 s
+
+working on 513x513 mesh with split_mg preconditioner and fgmres solver
+L2 error (vorticity) -- abs: 1.497e-07, rel: 5.718e-05
+L2 error (streamfun) -- abs: 7.470e-09, rel: 1.464e-04
+
+results saved in Q2_pb/
+
+timings and errors
+  format: solver | wall time (s) | KSP iters | L2 rel error (vorticity) | L2 rel error (streamfun)
+
+direct
+  KSP iters: 2
+  L2 error (vorticity) -- abs: 1.497e-07, rel: 5.720e-05
+L2 error (streamfun) -- abs: 7.472e-09, rel: 1.464e-04
+
+split_direct
+  KSP iters: 2
+  L2 error (vorticity) -- abs: 1.497e-07, rel: 5.720e-05
+L2 error (streamfun) -- abs: 7.472e-09, rel: 1.464e-04
+
+split_mg
+  KSP iters: 5
+  L2 error (vorticity) -- abs: 1.497e-07, rel: 5.718e-05
+L2 error (streamfun) -- abs: 7.470e-09, rel: 1.464e-04

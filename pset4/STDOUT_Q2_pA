@@ -1,0 +1,10 @@
+running direct solver...
+running fieldsplit + direct...
+running fieldsplit + multigrid...
+results saved in Q2_pa/
+
+--- SNESSolve timings ---
+  format: Event  Count  Ratio  Time(s)  Ratio  Flops  Ratio  ...  %T %F %M %L %R  Mflop/s
+direct:        SNESSolve              1 1.0 3.3807e+00 1.0 2.39e+08 1.0 0.0e+00 0.0e+00 0.0e+00 96 100  0  0  0  96 100  0  0  0    71
+split_direct:  SNESSolve              1 1.0 3.4992e+00 1.0 1.32e+08 1.0 0.0e+00 0.0e+00 0.0e+00 97 99  0  0  0  97 99  0  0  0    38
+split_mg:      SNESSolve              1 1.0 8.5896e-01 1.0 8.26e+08 1.0 0.0e+00 0.0e+00 0.0e+00 87 100  0  0  0  87 100  0  0  0   962

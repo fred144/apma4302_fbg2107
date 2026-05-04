@@ -87,3 +87,23 @@ with boundary conditions $u(a) = u_a$, $u(b) = u_b$
 we are apprximating $u(x) \sim u \in R^{N+1}$
 
 
+# parallel performance notes
+
+two fundamental variables 
+- N, the problem size; e.g., DoF
+- P, the number of processes
+### basic definitions
+of $t(N,1)$, is the time it takes to solve a problem of size N on one process 
+
+then the speedup is defined as 
+$$
+s_N (P) = \frac{t(N,1)}{t(N,P)}
+$$
+
+perfect speedup is when $s_N(P) = P$
+
+Optimal solver complexity $t(N,1) = O(N)$
+
+optimal strong scaling is  $s_N(P) = P$ for fixed N and increasing P
+
+optimal weak sclaling $e_N(P) = 1$ for fixe $N$ and $P$
