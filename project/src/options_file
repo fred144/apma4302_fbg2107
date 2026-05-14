@@ -1,0 +1,8 @@
+# PETSc options for euler1d
+-da_grid_x 400
+-cfl 0.4
+-t_end 0.2
+-output_freq 20
+-riemann_type hllc
+-limiter_type minmod
+-gamma 1.6667

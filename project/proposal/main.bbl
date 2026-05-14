@@ -1,0 +1,35 @@
+\begin{thebibliography}{3}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[{Nelson} et~al.(2019){Nelson}, {Springel}, {Pillepich},
+  {Rodriguez-Gomez}, {Torrey}, {Genel}, {Vogelsberger}, {Pakmor}, {Marinacci},
+  {Weinberger}, {Kelley}, {Lovell}, {Diemer}, and
+  {Hernquist}]{2019ComAC...6....2N}
+Dylan {Nelson}, Volker {Springel}, Annalisa {Pillepich}, Vicente
+  {Rodriguez-Gomez}, Paul {Torrey}, Shy {Genel}, Mark {Vogelsberger}, Ruediger
+  {Pakmor}, Federico {Marinacci}, Rainer {Weinberger}, Luke {Kelley}, Mark
+  {Lovell}, Benedikt {Diemer}, and Lars {Hernquist}.
+\newblock {The IllustrisTNG simulations: public data release}.
+\newblock \emph{Computational Astrophysics and Cosmology}, 6\penalty0
+  (1):\penalty0 2, May 2019.
+\newblock \doi{10.1186/s40668-019-0028-x}.
+
+\bibitem[{Springel}(2010)]{2010MNRAS.401..791S}
+Volker {Springel}.
+\newblock {E pur si muove: Galilean-invariant cosmological hydrodynamical
+  simulations on a moving mesh}.
+\newblock \emph{MNRAS}, 401\penalty0 (2):\penalty0 791--851, January 2010.
+\newblock \doi{10.1111/j.1365-2966.2009.15715.x}.
+
+\bibitem[{Weinberger} et~al.(2020){Weinberger}, {Springel}, and
+  {Pakmor}]{2020ApJS..248...32W}
+Rainer {Weinberger}, Volker {Springel}, and R{\"u}diger {Pakmor}.
+\newblock {The AREPO Public Code Release}.
+\newblock \emph{ApJ}, 248\penalty0 (2):\penalty0 32, June 2020.
+\newblock \doi{10.3847/1538-4365/ab908c}.
+
+\end{thebibliography}

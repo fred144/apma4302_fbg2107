@@ -7,7 +7,7 @@
 \begin{document}
 
 \begin{flushleft}
-\textbf{Project Proposal APMA4302} \\
+\textbf{Final Project APMA4302} \\
 Fred Angelo Garcia (fbg2107) \\
 \today
 \end{flushleft}
@@ -15,65 +15,274 @@ Fred Angelo Garcia (fbg2107) \\
 \vspace{0.1in}
 
 \section{Introduction}
-My research is in designing cosmological simulations like IllustrisTNG \citep{2019ComAC...6....2N} in a (magneto)- hydrodynamics code called \texttt{AREPO} \citep{2020ApJS..248...32W}. What my thesis work is mainly concerned with is using the hydrodynamics code to write models for physics (e.g., how black holes accrete matter, how stars exploding as supernovae affect the surrounding gas, etc.). However, I haven't delve into the implementation of the hydrodynamics code itself. For this project, that is what I want to do. I will implement a finitie volume solver for compressible Euler equations on a uniform Cartesian grid in 2D, implemeneted in PETSc. 
+Most of cosmological simulations are ran using in a (radiative magneto)- hydrodynamics codes, since the gas in our universe can effectively be treated as a compressible fluid. What primarily drives the evolution of this fluid are gravity and astrophysical processes (e.g., star formation, black hole accretion, etc.). A notable example of a cosmological simulation code that is used to run large scale cosmological simulations is called \texttt{AREPO} \citep{2020ApJS..248...32W}, which is a moving mesh code that solves the hydrodynamics equations on an unstructured Voronoi mesh. The astrophysical models that are implemented in the code and used to run large scale cosmological simulations is called IllustrisTNG \citep{2019ComAC...6....2N}. The hydrodynamics code and the astrophysical models are two separate things. The hydrodynamics code is the numerical method that solves the equations of fluid dynamics, while the astrophysical models are the subgrid physics that are implemented in the code to model the unresolved physics (e.g., how black holes accrete matter, how stars exploding as supernovae affect the surrounding gas, etc.). 
+
+In this project, we will take the time to step back and look at the fundamentals of finite volume methods for solving the hydrodynamics equations that we use daily. These will alsp function as a personal reference for me, if we ever need to understand what's going on under the hood of the hydrodynamics code that we use.
+
+we will implement a simple (parallelizable) finite volume solver in PETSc to solve simple 1D problems for which there are analytic solutions (e.g., the Sod shock tube problem), test convergence, and analyze different numerical tricks, such as slope limiters, to ensure numerical stability especially in the presence of shocks, a key astrophysical process relvant in supernovea and blackhole jet ejecta.
 
 
-\section{Approach}
-Recall from hydrodynamics that we have the following set of equations. For at some point in the fluid filed we havve a mass density at time $t$: $\rho(x,y,t)$. We also have a velicity field $\mathbf{v}=(v_x, v_y)$ which is the velocity in the $x$ and $y$ direction, respectively. We can define the mass conservfation equation as
-\begin{equation}
-\frac{\partial \rho}{\partial t} + \nabla \cdot (\rho \mathbf{v}) = 0
-\end{equation}
-which states that the change in mass density at a point is equal to the divergence of the mass flux $\rho \mathbf{v}$ (the flow through the boundary, which carries a momentum per unit volume). We can also write the momentum conservation equation as
-\begin{align*}
-\frac{\partial (\rho \mathbf{v})}{\partial t} + \nabla \cdot (\rho \mathbf{v} \mathbf{v} ) +\nabla P &= 0\\
-\frac{\partial (\rho v_x)}{\partial t} + \nabla \cdot (\rho v_x \mathbf{v} ) +\frac{\partial P}{\partial x} &= 0\\
-\frac{\partial (\rho v_y)}{\partial t} + \nabla \cdot (\rho v_y \mathbf{v} ) +\frac{\partial P}{\partial y} &= 0 
-\end{align*}
-where $P(x,y,t)$ is the pressure at a point. We also need to conserve the total energy $E = \rho u + \frac{1}{2} \rho |\mathbf{v}|^2$. Where $u$ is the internal energy per unit mass.Where the total energy conservation equation is
-\begin{equation}
-\frac{\partial E}{\partial t} + \nabla \cdot ((E+P)\mathbf{v}) = 0
-\end{equation}
-for an ideal gas, we have the equation of state $P = (\gamma - 1) \rho u$ where $\gamma = 5/3$ is the adiabatic index and the term $(E+P)\mathbf{v}$ is the energy flux. We can think in terms of vectors and we are essentially solving the following system of equations:
-\begin{align*}
-\frac{\partial \mathbf{U}}{\partial t} + \nabla \cdot \mathbf{F}(\mathbf{U}) = 0, {\rm where} \quad
-\mathbf{U} = \begin{bmatrix}\rho \\ \rho v_x \\ \rho v_y \\ E
-\end{bmatrix}, \\ 
-\mathbf{F}(\mathbf{U}) = \begin{bmatrix}\rho v_x \\ \rho v_x^2 + P \\ \rho v_x v_y \\ (E+P) v_x \end{bmatrix} 
-\mathbf{G}(\mathbf{U}) = \begin{bmatrix}\rho v_y \\ \rho v_x v_y \\ \rho v_y^2 + P \\ (E+P) v_y \end{bmatrix}
-\end{align*}
-where we just wrote out explectily each direction. The integral form can be written as, which we solve for each cell in the grid, we can write the integral form of the conservation law as
-\begin{equation}
-    \dfrac{d}{dt} \int_{\rm volume} \mathbf{U} dV + \int_{\rm surface} \mathbf{F}(\mathbf{U}) \cdot \hat{n} dS = 0
-\end{equation}
-for some $\hat{n}$ is the normal vector to the surface. We can then discretize this equation using a finite volume method. We discritize the volume into celss with dith $\Delta x, \Delta y$ and we have the primitive varibables in each cell denoted as $\mathbf{U}_{i,j}$ turning the integrat into 
-\begin{equation}
-\frac{d \mathbf{U}_{i,j}}{dt} = - \frac{1}{\Delta x} (\mathbf{F}_{i+1/2, j} - \mathbf{F}_{i-1/2, j}) - \frac{1}{\Delta y} (\mathbf{G}_{i, j+1/2} - \mathbf{G}_{i, j-1/2})
-\end{equation}
-where we are solving fluxes and at each timestep $\delta t$ to the next state $n+1$ we updates using 
-\begin{align*}
-\mathbf{U}_{i,j}^{n+1} &= \mathbf{U}_{i,j}^n  - \frac{\Delta t}{\Delta x}(\mathbf{F}_{i+1/2, j} - \mathbf{F}_{i-1/2, j})\\
-&- \frac{\Delta t}{\Delta y} (\mathbf{G}_{i, j+1/2} - \mathbf{G}_{i, j-1/2})
-\end{align*}
+ 
 
-\section{Future Work}
-I will use any Reiman Solvers available in Petsc to solve for the fluxes $\mathbf{F}_{i+1/2, j}$ and $\mathbf{G}_{i, j+1/2}$. I will also use the time stepping methods available in PETSc to update the solution at each time step. ANd, upon insepction, Petsc has the DMDA object\footnote{https://petsc.org/release/manualpages/DMDA/DMDA/} which can actually solve PDEs on a structured grid.
 
-I anticipate the workflow to be 
+\section{Methods}
+Recall, most of these have been mentioned in the proposal. We start with the equations of hydrodynamics. Which are hyperbolic partial differential equations that describe the conservation of mass, momentum, and energy in a fluid. Euler usually suffices, since the universe's scales are so large that viscosity and thermal conduction are negligible to warrant the use of the Navier-Stokes equations. 
+
+The equations can be written in conservative form (with source terms for gravity and astrophysical processes, which we will ignore for this project) as
+\begin{equation}
+    \frac{\partial \rho}{\partial t} + \nabla \cdot (\rho \mathbf{v}) = 0,
+\end{equation}
+\begin{equation}
+    \frac{\partial (\rho \mathbf{v})}{\partial t} + \nabla \cdot (\rho \mathbf{U} \mathbf{U})  + \nabla p = 0,
+\end{equation}
+\begin{equation}
+    \frac{\partial \rho E}{\partial t} + \nabla \cdot (\rho E \mathbf{U} + p \mathbf{U}) = 0.
+\end{equation}
+where $\rho$ is the mass density, $\mathbf{U} = u \hat{x} + v \hat{y}$ is the velocity vector, $p$ is the pressure, and $E$ is the total energy per unit mass\footnote{Note, we will use much of the notation here and in the code as in \url{github.com/Open-Astrophysics-Bookshelf/numerical_exercises} an intro to numerical methods textbook by M. Zingale at Stony Brook}. The specific energy $e$ is related to the total energy by $E = e + \tfrac{1}{2}|\mathbf{U}|^2$. The system is closed by an equation of state, which for an ideal gas is typically expresed as $p = (\gamma - 1)\rho e$, where $\gamma$ is the adiabatic index (e.g., $\gamma = 5/3$ for a monatomic ideal gas) and a given sound speed $c_s$ is given by $c_s = \sqrt{\gamma p / \rho}$. 
+
+\begin{figure*}
+    \centering
+    \includegraphics[width=1\textwidth]{src/ics.png}
+    \caption{Initial conditions for the Sod shock tube problem (solid blue) and the Lax shock tube problem (dashed red).}
+    \label{fig:ics}
+\end{figure*}
+
+\subsection{1D Euler Equations}
+In this project we restrict to one spatial dimension. This simplifies the equations to
+\begin{equation}
+    \frac{\partial \rho}{\partial t} + \frac{\partial (\rho u)}{\partial x} = 0,
+\end{equation}
+\begin{equation}
+    \frac{\partial (\rho u)}{\partial t} + \frac{\partial (\rho u u + p)}{\partial x} = 0,
+\end{equation}
+\begin{equation}
+    \frac{\partial \rho E}{\partial t} + \frac{\partial (u(\rho E + p))}{\partial x} = 0.
+\end{equation}
+
+In this conservative form $\mathcal{U}_t + \mathbf{F}(\mathcal{U})_x = 0$, we can write the system as a pair of vector quatities
+\begin{equation}
+    \mathcal{U} = \begin{bmatrix}
+        \rho \\
+        \rho u \\
+        \rho E
+    \end{bmatrix},
+    \qquad
+    \mathbf{F} (\mathcal{U}) = \begin{bmatrix}
+        \rho u \\
+        \rho u u + p \\
+        u(\rho E + p)
+    \end{bmatrix}.
+\end{equation}
+Expressed this way, these are the conserved variables: mass density $\rho$, momentum density $\rho u$, and energy density $\rho E$. The fluxes are the mass flux $\rho u$, the momentum flux $\rho u u + p$, and the energy flux $u(\rho E + p)$. These are PDEs, which means information propagates via waves, there is a finite speed of propagation, and the solution can develop discontinuities (e.g., shocks) even if the initial conditions are smooth. 
+
+\subsection{Riemann Problem Setup}
+
+For Professor: tl;dr we did MUSCL-HLLC in PetSc.
+
+Riemann solvers are good at these hyperbolic systems problems like those set up in Figure \ref{fig:ics}. Such problems are the Sod shock tube problem and the Lax shock tube problem, which are two classic test problems for hydrodynamics codes. The initial conditions are piecewise constant, with a discontinuity at $x = 0.5$. For Sod, there is a density and pressure jump, but the velocity is zero everywhere. For Lax, there is a density, velocity, and pressure jump.  
+
+The solution to these problems consists of three nonlinear wave structures: a left-going rarefaction wave, a contact discontinuity, and a right-going shock wave. These waves propagate according to the characteristic structure of the Euler equations, whose eigenvalues are $u-c$, $u$, and $u+c$. The contact discontinuity propagates with the fluid velocity in the intermediate (star) region, while the shock and rarefaction propagate at nonlinear wave speeds determined by the Rankine–Hugoniot conditions and characteristic fan structure.
+
+Unlike linear advection problems, these solutions do not simply translate while preserving shape; instead, nonlinear effects generate shocks and rarefaction fans, making them non-trivial tests for numerical methods.
+
+As a side note, in a numerical finite-volume context, the left and right states at each interface are often denoted $\mathcal{U}_L =\mathcal{U}_i$ and $\mathcal{U}_R = \mathcal{U}_{i+1}$, respectively.
+
+
+\subsection{Finite Volume Discretization}
+
+To actually solve these equations, we need to discretize them. We lay down a grid for $[0,1]$ into $N$ uniform cells of width $\Delta x = 1/N$. Each cell $i$ stores the volume-averaged conserved variables $\mathcal{U}_i$; i.e., each cell has uniform properties. Integrating the conservation law over cell $i$ yields the exact update relation, where $n$ is the time step index,
+\begin{equation}
+    \mathcal{U}_i^{n+1} = \mathcal{U}_i^{n}
+    - \frac{\Delta t}{\Delta x}\!\left(\mathbf{F}^{n}_{i+1/2} - \mathbf{F}^{n}_{i-1/2}\right),
+\label{eq:fv_update}
+\end{equation}
+where $\mathbf{F}_{i\pm 1/2}$ is the numerical flux at the left and right faces of cell $i$, which must be approximated. The simplest choice is the Lax-Friedrichs (LF) flux, which we include as a first-order baseline for comparison,
+\begin{equation}
+\begin{split}
+    \mathbf{F}_{i+1/2}^{\mathrm{LF}} &= \frac{1}{2}\!\left(\mathbf{F}(\mathcal{U}_i) + \mathbf{F}(\mathcal{U}_{i+1})\right)\\
+    &\quad - \frac{\Delta x}{2\Delta t}\!\left(\mathcal{U}_{i+1} - \mathcal{U}_i\right),
+\end{split}
+\end{equation}
+which is first-order accurate and requires no knowledge of the local wave structure. Breaking down the LF equation, the term:
+\begin{equation}
+    \frac{1}{2}\!\left[\mathbf{F}(\mathcal{U}_i) + \mathbf{F}(\mathcal{U}_{i+1})\right]
+\end{equation}
+is a central average term quantifying the average flux coming from the left and right cells (more on this later when we talk about slope limiters and reconstruction). The term
+\begin{equation}
+    - \frac{\Delta x}{2\Delta t}\!\left(\mathcal{U}_{i+1} - \mathcal{U}_i\right)
+\end{equation}
+is a diffusive term that stabilizes the solution by sort of smearing out the solution and preventing unphysical oscillations near shocks. In particular, there is a stability condition, called the Courant-Friedrichs-Lewy (CFL) condition, which state the step size
+\begin{equation}
+    \Delta t = \nu\,\frac{\Delta x}{\displaystyle\max_i\!\bigl(|u_i| + c_{s,i}\bigr)},
+    \qquad c_s = \sqrt{\frac{\gamma p}{\rho}},
+\end{equation}
+\citep{courant1928partiellen} with CFL number $\nu < 1$ and the local sound speed $c_s$. 
+
+In this work, all production runs use the HLLC (Harten-Lax-van Leer-Contact) approximate Riemann solver instead. The overall finite-volume framework is identical for LF and HLLC, but the flux equations themselves are different:
+\begin{equation}
+    \mathbf{F}_{i+1/2}^{\mathrm{HLLC}} = \begin{cases}
+        \mathbf{F}(\mathcal{U}_L), & S_L > 0,\\
+        \mathbf{F}^*, & S_L \leq 0 \leq S_R,\\
+        \mathbf{F}(\mathcal{U}_R), & S_R < 0,
+    \end{cases}
+\end{equation}
+where $S_L$ and $S_R$ are estimates of the left and right wave speeds, and $\mathbf{F}^*$ is the flux in the star region between the waves, which is computed by enforcing the Rankine–Hugoniot jump conditions across the waves, which ensures the correct shock speeds and contact discontinuity propagation. In short, these are stament of convervation of mass, energy, and momentum across the shock \cite{2015EPJH...40..159K}. 
+
+\subsection{Reconstruction}
+
+A first-order scheme feeds the raw cell-averaged values directly into the flux function, i.e.\ $\mathbf{F}(\mathcal{U}_i)$ is evaluated at the cell centre. This piecewise-constant reconstruction is only first-order accurate. To achieve higher-order accuracy, we need to do better.
+
+Reconstruction is the process of fitting a function to the cell-averaged values in order to obtain more accurate estimates of the solution at the cell interfaces. A piecewise-constant reconstruction introduces excessive numerical diffusion. The Monotone Upstream-centred Schemes for Conservation Laws (MUSCL) framework increases accuracy  by prescribing some non-linear interpolation of the cell-averaged values to obtain left and right states at the cell interfaces, which are then used as inputs to the numerical flux function.
+
+Reconstruction is performed on the primitive variables $\mathbf{W} = \{\rho, u, p\}$. For each scalar component $q \in \mathbf{W}$, the left and right interface states at the cell face $i+\tfrac{1}{2}$ are constructed as
+\begin{equation}
+    q^{L}_{i+1/2} = q_i + \tfrac{1}{2}\,\phi(r_i)\,(q_i - q_{i-1}), 
+    \end{equation}
+\begin{equation}
+    q^{R}_{i+1/2} = q_{i+1} - \tfrac{1}{2}\,\phi(r_{i+1})\,(q_{i+2} - q_{i+1})
+\end{equation}
+
+
+where the ratio of successive differences is defined by
+\begin{equation}
+    r_i = \frac{q_i - q_{i-1}}{q_{i+1} - q_i}.
+\end{equation}
+
+This ratio measures local smoothness: $r_i \approx 1$ in smooth regions, while large or small values indicate steep gradients or discontinuities.
+
+\subsection{Slope Limiters}
+
+Now for some numerical wizzardry. 
+
+The limiter function $\phi(r)$ suppresses spurious oscillations near shocks while retaining second-order accuracy in smooth regions. Common limiters satisfying the constraints of \cite{1984SJNA...21..995S} include
+\begin{equation}
+    \phi_{\mathrm{MinMod}}(r) = \max\!\bigl(0,\min(1,r)\bigr), 
+\end{equation}
+\begin{equation}
+    \phi_{\mathrm{van\,Leer}}(r) = \frac{r + |r|}{1 + |r|},
+\end{equation}
+\begin{equation}
+    \phi_{\mathrm{Superbee}}(r) = \max\!\bigl(0,\min(2r,1),\min(r,2)\bigr).
+\end{equation}
+Setting $\phi = 0$ reduces the scheme to first-order piecewise-constant reconstruction. Note, other limiters can be found here: \url{wikipedia.org/wiki/Flux_limiter}.
+
+The reconstructed interface states are then used as inputs to the numerical flux function in the finite-volume update we initially wrote down in Equation \ref{eq:fv_update}, which is now modified to
+\begin{equation}
+\begin{split}
+    \mathcal{U}_i^{n+1} &= \mathcal{U}_i^{n}
+    - \frac{\Delta t}{\Delta x}
+    \Bigl(
+        \mathbf{F}^{n}_{i+1/2}\!\left(\mathcal{U}^{L}_{i+1/2}, \mathcal{U}^{R}_{i+1/2}\right)\\
+        &-
+        \mathbf{F}^{n}_{i-1/2}\!\left(\mathcal{U}^{L}_{i-1/2}, \mathcal{U}^{R}_{i-1/2}\right)
+    \Bigr),
+\end{split}
+\end{equation}
+where the numerical flux $\mathbf{F}_{i+1/2}^n$ is obtained by passing the reconstructed states $\mathcal{U}^L_{i+1/2}$ and $\mathcal{U}^R_{i+1/2}$ to a Riemann solver. In this project that solver is HLLC, which approximates the intercell flux by accounting for the three-wave structure of the Euler equations.
+
+\section{Code Implementation}
+The bulk of the numerics is inspired by the \href{https://github.com/pmocz/riemann-solver/tree/main}{Philip Mocz article}, which is a Python implementation of a finite volume solver for the 1D Euler equations. we have implemented the same algorithm in C using PETSc, which can parallelize the computation across multiple processors.
+
+The main steps of the algorithm are as follows:
 \begin{enumerate}
-    \item set up initial conditions in python and write to a file that can be read by the PETSc code.
-    \item Create PETSc vector by using hdf4 viewer and loading the initial conditions into the vector.
-    \item  The time integration loop consists of the following steps: (i) exchnage ghost cells, (ii) compute primitive variables, (iii) compute fluxes, (iv) update conserved variables, (boundy conditions, etc.), (v) compute timestep. 
-    \item I also have to think about stability like slope limiters
-    \item different tests will have different boundary conditions, but for kevin-helmholtz and rayleigh-taylor
-\end{enumerate}
-I hope to run simple test problems like the 
-\begin{enumerate}
-\item Sod shock tube problem in 1D, which is a standard test problem with an analytic solution, which the code I use also applies \citep{2010MNRAS.401..791S}. 
-\item Kelvin-Helmholtz instability, which is a fluid instability 
-\item Rayleigh-Taylor instability, which is another fluid instability, but this will require adding gravity term to the conservation equations
-\end{enumerate}
-and output .vtks or snapshots to then plot the time evolution. I will also do some resolution studies for the sod shock tube problem but that will not be the focus. The goal is to be able to implement a finite volume solver to better understand what the tools I use in my research.
+    \item Compute CFL condition:the local maximum signal speed $\max_i(|u_i| + c_{s,i})$ over owned cells, then \texttt{MPI\_Allreduce} to obtain the global maximum across all ranks. The time step is $\Delta t = \nu\,\Delta x / \lambda_{\max}$ with $\nu = 0.4$.
 
+    \item Call \texttt{DMGlobalToLocalBegin/End} to fill ghost cells from neighbouring ranks, making cells $i - 2$ through $i + N_{\rm local} + 1$ fully populated (two ghost layers on each side), where $N_{\rm local}$ is the number of cells in the rank.\footnote{Ghost cells are extra cells stored on each rank that hold copies of the data from neighboring ranks, allowing for local computations that require information from adjacent cells without needing to communicate during the computation. They provide stencial access to neighboring cell values. Thankfully PETSc's \texttt{DMDA} object manages this automatically: each rank allocates storage for its owned cells plus a layer of ghost cells on each side, and \texttt{DMGlobalToLocal} fills those ghost cells by communicating with adjacent ranks before each flux evaluation.}
+
+    \item At the physical domain boundaries, copy the innermost owned cell into the ghost layers (transmissive outflow): $\mathcal{U}_{-1} = \mathcal{U}_{-2}$ $ = \mathcal{U}_0$ on the left, and symmetrically on the right.
+
+    \item  Convert $\mathcal{U} \to \mathbf{W} = (\rho, u, p)^T$ in every cell including ghosts, using the ideal-gas EOS $p = (\gamma-1)(E - \tfrac{1}{2}\rho u^2)$.
+
+    \item For each face $i+\tfrac{1}{2}$ in the owned stencil, apply the slope limiter to obtain $(q^L_{i+1/2},\, q^R_{i+1/2})$ for each primitive $q \in \{\rho, u, p\}$, convert to conserved states, then call \texttt{flux\_hllc} \citep{1994ShWav...4...25T} to obtain $\mathbf{F}_{i+1/2}$.
+
+    \item Apply Equation~\ref{eq:fv_update}: $\mathcal{U}_i^{n+1} = \mathcal{U}_i^n - (\Delta t/\Delta x)$ $(\mathbf{F}_{i+1/2} - \mathbf{F}_{i-1/2})$, writing the result into the global vector.
+\end{enumerate}
+
+The meat of the code is in \texttt{euler1d.c}, contained in the \texttt{src} directory. Just make the files, and the args are as follows:
+\begin{tiny}
+\begin{verbatim}
+Usage: mpirun -n <num_procs> ./euler1d [options]
+Options: (default *)
+  "  -da_grid_x N        number of cells (default 400)"
+    "  -cfl C              CFL number (default 0.4)"
+    "  -t_end T            end time (default 0.2)"
+    "  -output_freq F      save every F steps (default 10)"
+    "  -riemann_type TYPE  lf | hllc*"
+    "  -limiter_type TYPE  none | minmod* | vanleer | superbee"
+    "  -problem TYPE       sod* | lax | vacuum "
+    "  -gamma G            adiabatic index (default 5/3)";
+\end{verbatim}
+\end{tiny}
+\texttt{run$\_$sims.sh} runs all the required runs to produce the plots, of which can all be redrawn by doing \texttt{run$\_$plots.sh}.
+
+\begin{figure}
+    \includegraphics[width=0.5\textwidth]{src/timelapse_sod.png}
+    \caption{Time evolution of the solution for the Sod shock tube problem with ran with \texttt{mpiexec -np 4 ./euler1d 
+        -da$\_$grid$\_$x 400 -problem sod -t$\_$end T  -riemann$\_$type hllc -limiter$\_$type minmod -output$\_$freq 99999 -gamma 1.6667}. The solution consists of a left-going rarefaction wave, a contact discontinuity, and a right-going shock wave.} Where we modified T end time to show evolution.
+    \label{fig:sod_time}
+\end{figure}
+
+
+\section{Results}
+Using known analytic solutions to the Sod and Lax shock tube problems, we look at performance, convergence, and the effect of different slope limiters on the solution.
+
+\subsection{Solution Structure: Sod and Lax}
+First, we look at the time evolution of the solution for the Sod shock tube problem in Figure \ref{fig:sod_time}, which shows the density computed using HLLC+MinMod evolved from the initial conditions to $t = 0.2$. The solutions look reasonable when compared with the analytic solution (from Phil Mocz's code), with the expected wave structure of a left-going rarefaction wave, a contact discontinuity, and a right-going shock wave. There are bumps near the shock and contact discontinuity, which are expected since these are regions of strong gradients where the solution is not smooth.
+
+
+we then ran it through the Lax shock tube problem, which has a more extreme initial condition with a higher velocity jump and a lower pressure on the right side. The solution is shown in Figure \ref{fig:lax}, which shows a single snapshot at $t = 0.13$. The solution also looks reasonable, with the expected wave structure of a left-going rarefaction wave, a contact discontinuity, and a right-going shock wave. However, there are more pronounced bumps (like a sinosoid shape) near the shock and contact discontinuity compared to the Sod problem, which is expected since the Lax problem has stronger gradients and is more challenging to solve numerically as per the initial conditions shown in Figure \ref{fig:ics}.
+
+\begin{figure}
+    \includegraphics[width=0.5\textwidth]{src/comparison_lax.png}
+    \caption{Solution for the Lax shock tube problem at $t = 0.13$, using the initial conditions shown in the red dashed line of Figure \ref{fig:ics}.}
+    \label{fig:lax}
+\end{figure}
+
+
+\subsection{Limiter Comparison}
+
+
+\begin{figure}
+    \includegraphics[width=0.5\textwidth]{src/limiter_comparison.png}
+    \caption{Comparison of different slope limiters for the Sod shock tube problem at $t = 0.2$.}
+    \label{fig:limiter_comparison}
+\end{figure}
+
+We now compare various slope limiters for the Sod shock tube problem. The results are shown in Figure \ref{fig:limiter_comparison}, which shows the density, velocity and pressure computed using HLLC with different slope limiters at $t = 0.2$. The solution with no limiter (i.e., piecewise-constant reconstruction) is very diffusive, with the shock and contact discontinuity being smeared out over many cells (blue). The MinMod limiter (orange) produces a sharper solution, but there are still some oscillations near the shock and contact discontinuity. The van Leer limiter (green) produces a sharper solution than MinMod, but there are more pronounced oscillations near the shock and contact discontinuity. The Superbee limiter (red) produces the sharpest solution. For example, if we look near $x = 6.5$, the drop in density is more pronounced. But, there are significant oscillations near the shock and contact discontinuity in other places, which can be unphysical. 
+
+Note, these oscillations still satisfy the total variation diminishing (TVD) condition, which means they do not grow in time and are not unbounded \citep{1983JCoPh..49..357H}. However, they can still be undesirable since they can lead to negative densities or pressures, which are unphysical.
+
+
+Overall, the choice of slope limiter is a trade-off between accuracy and stability, with more aggressive limiters producing sharper solutions but also more oscillations. Personally, no limiter (blue, which is piecewise-constant) looks an attractive soluton. However, these are not ideal for capturing shocks. Superbee limiter looks like a very sharp solution, which is ideal for capturing shocks but the oscillations look too much, especially in velocity. The MinMod and van Leer limiters look OK, apart from the small oscillations -- these look better.
+
+Looking at some papers in my field, another hydro code (AMR in this case called \texttt{RAMSES} \citep{2002AA...385..337T}) uses the MinMod limiter. So this results makes sense.
+
+
+
+\subsection{Convergence}
+
+Finally, we do a quick convergence check on the $L^1$ error in density, defined as
+\begin{equation}
+    \|\rho - \rho_{\mathrm{exact}}\|_1 = \sum_{i=1}^N |\rho_i - \rho_{\mathrm{exact}}(x_i)|\,\Delta x,
+\end{equation}
+where $\rho_i$ is the numerical cell-average and $\rho_{\mathrm{exact}}(x_i)$ is the exact Riemann solution evaluated at the cell centre. The results are shown in Figure~\ref{fig:convergence} for all four slope limiters at $N = 100, 200, 400, 800$ for the Sod shock tube at $t = 0.2$.
+
+\begin{figure}
+    \includegraphics[width=0.5\textwidth]{src/convergence.png}
+    \caption{$L^1$ error in density vs.\ number of cells for the Sod shock tube at $t = 0.2$, for four slope limiters using HLLC. Dashed and dotted grey lines show $\mathcal{O}(N^{-1})$ and $\mathcal{O}(N^{-2})$ reference slopes, respectively.}
+    \label{fig:convergence}
+\end{figure}
+
+All four limiters converge, but at a rate \textit{slower} than first order $\sim \mathcal{O}(N^{-0.7})$. This is a little worrying, but we guess the contact discontinuity in the Sod solution is the dominant error source; its width is $\mathcal{O}(N^{-1})$ cells but its contribution to the $L^1$ norm decreases only as $\mathcal{O}(N^{-1})$, independent of limiter, pulling the measured slope below one. Away from the discontinuity the scheme is locally second-order, but the global rate is set by the worst region. so that's why it is a shallower slope than $\mathcal{O}(N^{-1})$.
+
+The piecewise-constant (no limiter) run tracks the other three closely because the contact discontinuity error dominates over the additional diffusion introduced by dropping the MUSCL slopes; its slightly higher error level reflects the extra smearing everywhere else. MinMod and van Leer produce nearly identical error magnitudes, with van Leer marginally lower. Superbee is the most accurate in the smooth rarefaction fan but shows slightly elevated errors near the contact due to its aggressive compression, consistent with the oscillations seen in Figure~\ref{fig:limiter_comparison}, so much so that it has the highest overall error at $N=800$.
+
+
+\section{Discussion and Conclusion}
+
+This project allowed to take a step back and look at the fundamentals of finite volume methods for solving the hydrodynamics equations that we use daily. we implemented a simple (parallelizable) finite volume solver in PETSc to solve simple 1D problems for which there are analytic solutions (e.g., the Sod shock tube problem), tested convergence, and analyzed different numerical tricks, such as slope limiters, to ensure numerical stability at shoscks.
+
+Slop limiters are a key ingredient in MUSCL-type schemes, which are widely used in astrophysical hydrodynamics codes. Here, we demonstrate the minmod is the best out of the ones we tested. Nonetheless, the MUSCL-HLLC solvers we explore here are just one class of Riemann solvers, and there are many other types of solvers that can be used to solve the Euler equations, which we hope to explore in the future. 
 
 \bibliographystyle{plainnat}
 \bibliography{main}

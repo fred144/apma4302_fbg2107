@@ -16,15 +16,46 @@
 \gdef\HyperFirstAtBeginDocument#1{#1}
 \providecommand\HyField@AuxAddToFields[1]{}
 \providecommand\HyField@AuxAddToCoFields[2]{}
-\citation{2019ComAC...6....2N}
 \citation{2020ApJS..248...32W}
+\citation{2019ComAC...6....2N}
 \@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {2}Approach}{1}{section.2}\protected@file@percent }
-\citation{2010MNRAS.401..791S}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Methods}{1}{section.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Initial conditions for the Sod shock tube problem (solid blue) and the Lax shock tube problem (dashed red).}}{2}{figure.1}\protected@file@percent }
+\newlabel{fig:ics}{{1}{2}{Initial conditions for the Sod shock tube problem (solid blue) and the Lax shock tube problem (dashed red)}{figure.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}1D Euler Equations}{2}{subsection.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Riemann Problem Setup}{2}{subsection.2.2}\protected@file@percent }
+\citation{courant1928partiellen}
+\citation{2015EPJH...40..159K}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Finite Volume Discretization}{3}{subsection.2.3}\protected@file@percent }
+\newlabel{eq:fv_update}{{8}{3}{Finite Volume Discretization}{equation.2.8}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.4}Reconstruction}{3}{subsection.2.4}\protected@file@percent }
+\citation{1984SJNA...21..995S}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.5}Slope Limiters}{4}{subsection.2.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3}Code Implementation}{4}{section.3}\protected@file@percent }
+\citation{1994ShWav...4...25T}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Results}{5}{section.4}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Time evolution of the solution for the Sod shock tube problem with ran with \texttt  {mpiexec -np 4 ./euler1d -da$\_$grid$\_$x 400 -problem sod -t$\_$end T -riemann$\_$type hllc -limiter$\_$type minmod -output$\_$freq 99999 -gamma 1.6667}. The solution consists of a left-going rarefaction wave, a contact discontinuity, and a right-going shock wave.}}{5}{figure.2}\protected@file@percent }
+\newlabel{fig:sod_time}{{2}{5}{Time evolution of the solution for the Sod shock tube problem with ran with \texttt {mpiexec -np 4 ./euler1d -da$\_$grid$\_$x 400 -problem sod -t$\_$end T -riemann$\_$type hllc -limiter$\_$type minmod -output$\_$freq 99999 -gamma 1.6667}. The solution consists of a left-going rarefaction wave, a contact discontinuity, and a right-going shock wave}{figure.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Solution Structure: Sod and Lax}{6}{subsection.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Limiter Comparison}{6}{subsection.4.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Solution for the Lax shock tube problem at $t = 0.13$, using the initial conditions shown in the red dashed line of Figure \ref  {fig:ics}.}}{6}{figure.3}\protected@file@percent }
+\newlabel{fig:lax}{{3}{6}{Solution for the Lax shock tube problem at $t = 0.13$, using the initial conditions shown in the red dashed line of Figure \ref {fig:ics}}{figure.3}{}}
+\citation{1983JCoPh..49..357H}
+\citation{2002AA...385..337T}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Comparison of different slope limiters for the Sod shock tube problem at $t = 0.2$.}}{7}{figure.4}\protected@file@percent }
+\newlabel{fig:limiter_comparison}{{4}{7}{Comparison of different slope limiters for the Sod shock tube problem at $t = 0.2$}{figure.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Convergence}{7}{subsection.4.3}\protected@file@percent }
 \bibstyle{plainnat}
 \bibdata{main}
-\bibcite{2019ComAC...6....2N}{{1}{2019}{{{Nelson} et~al.}}{{{Nelson}, {Springel}, {Pillepich}, {Rodriguez-Gomez}, {Torrey}, {Genel}, {Vogelsberger}, {Pakmor}, {Marinacci}, {Weinberger}, {Kelley}, {Lovell}, {Diemer}, and {Hernquist}}}}
-\bibcite{2010MNRAS.401..791S}{{2}{2010}{{Springel}}{{}}}
-\bibcite{2020ApJS..248...32W}{{3}{2020}{{{Weinberger} et~al.}}{{{Weinberger}, {Springel}, and {Pakmor}}}}
-\@writefile{toc}{\contentsline {section}{\numberline {3}Future Work}{2}{section.3}\protected@file@percent }
-\gdef \@abspage@last{2}
+\bibcite{courant1928partiellen}{{1}{1928}{{Courant et~al.}}{{Courant, Friedrichs, and Lewy}}}
+\bibcite{1983JCoPh..49..357H}{{2}{1983}{{Harten}}{{}}}
+\bibcite{2015EPJH...40..159K}{{3}{2015}{{Krehl}}{{}}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces $L^1$ error in density vs.\ number of cells for the Sod shock tube at $t = 0.2$, for four slope limiters using HLLC. Dashed and dotted grey lines show $\mathcal  {O}(N^{-1})$ and $\mathcal  {O}(N^{-2})$ reference slopes, respectively.}}{8}{figure.5}\protected@file@percent }
+\newlabel{fig:convergence}{{5}{8}{$L^1$ error in density vs.\ number of cells for the Sod shock tube at $t = 0.2$, for four slope limiters using HLLC. Dashed and dotted grey lines show $\mathcal {O}(N^{-1})$ and $\mathcal {O}(N^{-2})$ reference slopes, respectively}{figure.5}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Discussion and Conclusion}{8}{section.5}\protected@file@percent }
+\bibcite{2019ComAC...6....2N}{{4}{2019}{{{Nelson} et~al.}}{{{Nelson}, {Springel}, {Pillepich}, {Rodriguez-Gomez}, {Torrey}, {Genel}, {Vogelsberger}, {Pakmor}, {Marinacci}, {Weinberger}, {Kelley}, {Lovell}, {Diemer}, and {Hernquist}}}}
+\bibcite{1984SJNA...21..995S}{{5}{1984}{{Sweby}}{{}}}
+\bibcite{2002AA...385..337T}{{6}{2002}{{Teyssier}}{{}}}
+\bibcite{1994ShWav...4...25T}{{7}{1994}{{{Toro} et~al.}}{{{Toro}, {Spruce}, and {Speares}}}}
+\bibcite{2020ApJS..248...32W}{{8}{2020}{{{Weinberger} et~al.}}{{{Weinberger}, {Springel}, and {Pakmor}}}}
+\gdef \@abspage@last{9}

@@ -1,3 +1,11 @@
+
+# APMA 4302 Final Project
+- src: source code for the project including plots, scripts, and data
+- main.tex: main writeup for the project
+- main.bib: bibliography for the project
+- main.pdf: compiled version of the writeup for the project
+
+
 ### Notes from Prof Spiegelmen
 - clawpack 
 - PetSc has finite volume, and register reimmans solver

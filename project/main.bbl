@@ -1,9 +1,31 @@
-\begin{thebibliography}{3}
+\begin{thebibliography}{8}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
   \providecommand{\doi}[1]{doi: #1}\else
   \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Courant et~al.(1928)Courant, Friedrichs, and
+  Lewy]{courant1928partiellen}
+Richard Courant, Kurt Friedrichs, and Hans Lewy.
+\newblock {\"U}ber die partiellen differenzengleichungen der mathematischen
+  physik.
+\newblock \emph{Mathematische Annalen}, 100\penalty0 (1):\penalty0 32--74,
+  1928.
+
+\bibitem[{Harten}(1983)]{1983JCoPh..49..357H}
+Ami {Harten}.
+\newblock {High Resolution Schemes for Hyperbolic Conservation Laws}.
+\newblock \emph{Journal of Computational Physics}, 49\penalty0 (3):\penalty0
+  357--393, March 1983.
+\newblock \doi{10.1016/0021-9991(83)90136-5}.
+
+\bibitem[{Krehl}(2015)]{2015EPJH...40..159K}
+Peter O.~K. {Krehl}.
+\newblock {The classical Rankine-Hugoniot jump conditions, an important
+  cornerstone of modern shock wave physics: ideal assumptions vs. reality}.
+\newblock \emph{European Physical Journal H}, 40\penalty0 (2), March 2015.
+\newblock \doi{10.1140/epjh/e2015-50010-4}.
 
 \bibitem[{Nelson} et~al.(2019){Nelson}, {Springel}, {Pillepich},
   {Rodriguez-Gomez}, {Torrey}, {Genel}, {Vogelsberger}, {Pakmor}, {Marinacci},
@@ -18,12 +40,27 @@ Dylan {Nelson}, Volker {Springel}, Annalisa {Pillepich}, Vicente
   (1):\penalty0 2, May 2019.
 \newblock \doi{10.1186/s40668-019-0028-x}.
 
-\bibitem[{Springel}(2010)]{2010MNRAS.401..791S}
-Volker {Springel}.
-\newblock {E pur si muove: Galilean-invariant cosmological hydrodynamical
-  simulations on a moving mesh}.
-\newblock \emph{MNRAS}, 401\penalty0 (2):\penalty0 791--851, January 2010.
-\newblock \doi{10.1111/j.1365-2966.2009.15715.x}.
+\bibitem[{Sweby}(1984)]{1984SJNA...21..995S}
+P.~K. {Sweby}.
+\newblock {High Resolution Schemes Using Flux Limiters for Hyperbolic
+  Conservation Laws}.
+\newblock \emph{SIAM Journal on Numerical Analysis}, 21\penalty0 (5):\penalty0
+  995--1011, October 1984.
+\newblock \doi{10.1137/0721062}.
+
+\bibitem[{Teyssier}(2002)]{2002AA...385..337T}
+R.~{Teyssier}.
+\newblock {Cosmological hydrodynamics with adaptive mesh refinement. A new high
+  resolution code called RAMSES}.
+\newblock \emph{Astronomy \& Astrophysics}, 385:\penalty0 337--364, April 2002.
+\newblock \doi{10.1051/0004-6361:20011817}.
+
+\bibitem[{Toro} et~al.(1994){Toro}, {Spruce}, and
+  {Speares}]{1994ShWav...4...25T}
+E.~F. {Toro}, M.~{Spruce}, and W.~{Speares}.
+\newblock {Restoration of the contact surface in the HLL-Riemann solver}.
+\newblock \emph{Shock Waves}, 4\penalty0 (1):\penalty0 25--34, July 1994.
+\newblock \doi{10.1007/BF01414629}.
 
 \bibitem[{Weinberger} et~al.(2020){Weinberger}, {Springel}, and
   {Pakmor}]{2020ApJS..248...32W}

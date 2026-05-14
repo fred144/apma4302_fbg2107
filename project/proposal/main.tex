@@ -1,0 +1,81 @@
+\documentclass[12pt]{article}
+% twocolumn
+\twocolumn 
+
+\input{preamble}
+
+\begin{document}
+
+\begin{flushleft}
+\textbf{Project Proposal APMA4302} \\
+Fred Angelo Garcia (fbg2107) \\
+\today
+\end{flushleft}
+
+\vspace{0.1in}
+
+\section{Introduction}
+My research is in designing cosmological simulations like IllustrisTNG \citep{2019ComAC...6....2N} in a (magneto)- hydrodynamics code called \texttt{AREPO} \citep{2020ApJS..248...32W}. What my thesis work is mainly concerned with is using the hydrodynamics code to write models for physics (e.g., how black holes accrete matter, how stars exploding as supernovae affect the surrounding gas, etc.). However, I haven't delve into the implementation of the hydrodynamics code itself. For this project, that is what I want to do. I will implement a finitie volume solver for compressible Euler equations on a uniform Cartesian grid in 2D, implemeneted in PETSc. 
+
+
+\section{Approach}
+Recall from hydrodynamics that we have the following set of equations. For at some point in the fluid filed we havve a mass density at time $t$: $\rho(x,y,t)$. We also have a velicity field $\mathbf{v}=(v_x, v_y)$ which is the velocity in the $x$ and $y$ direction, respectively. We can define the mass conservfation equation as
+\begin{equation}
+\frac{\partial \rho}{\partial t} + \nabla \cdot (\rho \mathbf{v}) = 0
+\end{equation}
+which states that the change in mass density at a point is equal to the divergence of the mass flux $\rho \mathbf{v}$ (the flow through the boundary, which carries a momentum per unit volume). We can also write the momentum conservation equation as
+\begin{align*}
+\frac{\partial (\rho \mathbf{v})}{\partial t} + \nabla \cdot (\rho \mathbf{v} \mathbf{v} ) +\nabla P &= 0\\
+\frac{\partial (\rho v_x)}{\partial t} + \nabla \cdot (\rho v_x \mathbf{v} ) +\frac{\partial P}{\partial x} &= 0\\
+\frac{\partial (\rho v_y)}{\partial t} + \nabla \cdot (\rho v_y \mathbf{v} ) +\frac{\partial P}{\partial y} &= 0 
+\end{align*}
+where $P(x,y,t)$ is the pressure at a point. We also need to conserve the total energy $E = \rho u + \frac{1}{2} \rho |\mathbf{v}|^2$. Where $u$ is the internal energy per unit mass.Where the total energy conservation equation is
+\begin{equation}
+\frac{\partial E}{\partial t} + \nabla \cdot ((E+P)\mathbf{v}) = 0
+\end{equation}
+for an ideal gas, we have the equation of state $P = (\gamma - 1) \rho u$ where $\gamma = 5/3$ is the adiabatic index and the term $(E+P)\mathbf{v}$ is the energy flux. We can think in terms of vectors and we are essentially solving the following system of equations:
+\begin{align*}
+\frac{\partial \mathbf{U}}{\partial t} + \nabla \cdot \mathbf{F}(\mathbf{U}) = 0, {\rm where} \quad
+\mathbf{U} = \begin{bmatrix}\rho \\ \rho v_x \\ \rho v_y \\ E
+\end{bmatrix}, \\ 
+\mathbf{F}(\mathbf{U}) = \begin{bmatrix}\rho v_x \\ \rho v_x^2 + P \\ \rho v_x v_y \\ (E+P) v_x \end{bmatrix} 
+\mathbf{G}(\mathbf{U}) = \begin{bmatrix}\rho v_y \\ \rho v_x v_y \\ \rho v_y^2 + P \\ (E+P) v_y \end{bmatrix}
+\end{align*}
+where we just wrote out explectily each direction. The integral form can be written as, which we solve for each cell in the grid, we can write the integral form of the conservation law as
+\begin{equation}
+    \dfrac{d}{dt} \int_{\rm volume} \mathbf{U} dV + \int_{\rm surface} \mathbf{F}(\mathbf{U}) \cdot \hat{n} dS = 0
+\end{equation}
+for some $\hat{n}$ is the normal vector to the surface. We can then discretize this equation using a finite volume method. We discritize the volume into celss with dith $\Delta x, \Delta y$ and we have the primitive varibables in each cell denoted as $\mathbf{U}_{i,j}$ turning the integrat into 
+\begin{equation}
+\frac{d \mathbf{U}_{i,j}}{dt} = - \frac{1}{\Delta x} (\mathbf{F}_{i+1/2, j} - \mathbf{F}_{i-1/2, j}) - \frac{1}{\Delta y} (\mathbf{G}_{i, j+1/2} - \mathbf{G}_{i, j-1/2})
+\end{equation}
+where we are solving fluxes and at each timestep $\delta t$ to the next state $n+1$ we updates using 
+\begin{align*}
+\mathbf{U}_{i,j}^{n+1} &= \mathbf{U}_{i,j}^n  - \frac{\Delta t}{\Delta x}(\mathbf{F}_{i+1/2, j} - \mathbf{F}_{i-1/2, j})\\
+&- \frac{\Delta t}{\Delta y} (\mathbf{G}_{i, j+1/2} - \mathbf{G}_{i, j-1/2})
+\end{align*}
+
+\section{Future Work}
+I will use any Reiman Solvers available in Petsc to solve for the fluxes $\mathbf{F}_{i+1/2, j}$ and $\mathbf{G}_{i, j+1/2}$. I will also use the time stepping methods available in PETSc to update the solution at each time step. ANd, upon insepction, Petsc has the DMDA object\footnote{https://petsc.org/release/manualpages/DMDA/DMDA/} which can actually solve PDEs on a structured grid.
+
+I anticipate the workflow to be 
+\begin{enumerate}
+    \item set up initial conditions in python and write to a file that can be read by the PETSc code.
+    \item Create PETSc vector by using hdf4 viewer and loading the initial conditions into the vector.
+    \item  The time integration loop consists of the following steps: (i) exchnage ghost cells, (ii) compute primitive variables, (iii) compute fluxes, (iv) update conserved variables, (boundy conditions, etc.), (v) compute timestep. 
+    \item I also have to think about stability like slope limiters
+    \item different tests will have different boundary conditions, but for kevin-helmholtz and rayleigh-taylor
+\end{enumerate}
+I hope to run simple test problems like the 
+\begin{enumerate}
+\item Sod shock tube problem in 1D, which is a standard test problem with an analytic solution, which the code I use also applies \citep{2010MNRAS.401..791S}. 
+\item Kelvin-Helmholtz instability, which is a fluid instability 
+\item Rayleigh-Taylor instability, which is another fluid instability, but this will require adding gravity term to the conservation equations
+\end{enumerate}
+and output .vtks or snapshots to then plot the time evolution. I will also do some resolution studies for the sod shock tube problem but that will not be the focus. The goal is to be able to implement a finite volume solver to better understand what the tools I use in my research.
+
+
+\bibliographystyle{plainnat}
+\bibliography{main}
+
+\end{document}
