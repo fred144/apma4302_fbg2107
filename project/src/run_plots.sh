@@ -9,9 +9,8 @@ PYTHON=python3
 echo "  Euler1D plotting"
 echo "______________________"
 
-# ------------------------------------------------------------------ #
-# Sod comparison                                                      #
-# ------------------------------------------------------------------ #
+# Sod comparison                                                     
+
 echo
 echo "--- comparison_sod.png ---"
 $PYTHON plot_comparison.py \
@@ -20,9 +19,7 @@ $PYTHON plot_comparison.py \
     --problem  sod --t 0.2 \
     --out      comparison_sod.png
 
-# ------------------------------------------------------------------ #
-# Lax comparison                                                      #
-# ------------------------------------------------------------------ #
+# Lax comparison                                                      
 echo
 echo "--- comparison_lax.png ---"
 $PYTHON plot_comparison.py \
@@ -31,9 +28,7 @@ $PYTHON plot_comparison.py \
     --problem  lax --t 0.13 \
     --out      comparison_lax.png
 
-# ------------------------------------------------------------------ #
-# Convergence                                                         #
-# ------------------------------------------------------------------ #
+# Convergence                                                    
 echo
 echo "--- convergence.png ---"
 $PYTHON plot_convergence.py \
@@ -42,9 +37,9 @@ $PYTHON plot_convergence.py \
     --limiters none minmod vanleer superbee \
     --out convergence.png
 
-# ------------------------------------------------------------------ #
-# Limiter comparison                                                  #
-# ------------------------------------------------------------------ #
+
+# Limiter comparison                                
+
 echo
 echo "--- limiter_comparison.png ---"
 $PYTHON plot_limiter_comparison.py \
@@ -55,9 +50,8 @@ $PYTHON plot_limiter_comparison.py \
     --problem sod --t 0.2 --N 400 \
     --out limiter_comparison.png
 
-# ------------------------------------------------------------------ #
-# Timelapse                                                           #
-# ------------------------------------------------------------------ #
+
+# Timelapse                                                        
 echo
 echo "--- timelapse_sod.png ---"
 $PYTHON plot_timelapse.py \
@@ -66,16 +60,15 @@ $PYTHON plot_timelapse.py \
     --times     0.05 0.10 0.15 0.20 \
     --out       timelapse_sod.png
 
-# ------------------------------------------------------------------ #
-# Initial conditions                                                  #
-# ------------------------------------------------------------------ #
+ 
+# Initial conditions                                                 
 echo
 echo "--- ics.png ---"
 $PYTHON plot_ics.py
 
 echo
 echo "========================================"
-echo "  Figures produced:"
+echo "  fig produced:"
 for f in comparison_sod.png comparison_lax.png convergence.png \
           limiter_comparison.png timelapse_sod.png ics.png; do
     [ -f "$f" ] && echo "    $f" || echo "    $f  [MISSING]"

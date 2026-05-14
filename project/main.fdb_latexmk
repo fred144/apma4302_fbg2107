@@ -1,14 +1,14 @@
 # Fdb version 3
-["bibtex main"] 1778779348 "main.aux" "main.bbl" "main" 1778779429
+["bibtex main"] 1778779348 "main.aux" "main.bbl" "main" 1778788951
   "/usr/share/texlive/texmf-dist/bibtex/bst/natbib/plainnat.bst" 1233624470 26816 ffe5423d2019860bad9f54bc402fac15 ""
-  "main.aux" 1778779429 5966 b4891d7017f6a48c2e0e086b7a9008d2 "pdflatex"
+  "main.aux" 1778788950 5966 b4891d7017f6a48c2e0e086b7a9008d2 "pdflatex"
   "main.bib" 1778777859 6379 5389ba263fa0a9af371971cd64f89c1d ""
   (generated)
   "main.bbl"
   "main.blg"
-["pdflatex"] 1778779428 "/home/fabg/ColumbiaCourses/apma4302_fbg2107/project/main.tex" "main.pdf" "main" 1778779429
+["pdflatex"] 1778788949 "/home/fabg/ColumbiaCourses/apma4302_fbg2107/project/main.tex" "main.pdf" "main" 1778788951
   "/etc/texmf/web2c/texmf.cnf" 1694633655 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/home/fabg/ColumbiaCourses/apma4302_fbg2107/project/main.tex" 1778779428 24113 f4a06b5cc4d237d558e56b4bcc4e9d58 ""
+  "/home/fabg/ColumbiaCourses/apma4302_fbg2107/project/main.tex" 1778788949 24194 6c31ed7741b863445aa4a2da28419d23 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/newtx/ntx-ec-tlf.enc" 1640468671 2914 8283dfc24eaf1964346f843d7605c2b0 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/newtx/ntx-ot1-tlf.enc" 1422827479 2083 60e36f8eac802fcaf19eabe2633b406e ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/newtx/ntxsups_t1.enc" 1583272976 3683 dcfbd19e8c25385f126ff75f9cac26cb ""
@@ -186,10 +186,10 @@
   "/usr/share/texmf/web2c/texmf.cnf" 1644012257 39432 7155514e09a3d69036fac785183a21c2 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1740763194 4271227 d672d4662bed749f7922e92e70a51875 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1769859111 1435974 1310be80ecff0901bb971a20fb9bd19f ""
-  "main.aux" 1778779429 5966 b4891d7017f6a48c2e0e086b7a9008d2 "pdflatex"
+  "main.aux" 1778788950 5966 b4891d7017f6a48c2e0e086b7a9008d2 "pdflatex"
   "main.bbl" 1778779348 3119 a789a853891db07a916a3dcd1b28254d "bibtex main"
-  "main.out" 1778779429 1845 0b7f3654bb8764a05a0c47eeafea6290 "pdflatex"
-  "main.tex" 1778779428 24113 f4a06b5cc4d237d558e56b4bcc4e9d58 ""
+  "main.out" 1778788950 1845 0b7f3654bb8764a05a0c47eeafea6290 "pdflatex"
+  "main.tex" 1778788949 24194 6c31ed7741b863445aa4a2da28419d23 ""
   "preamble.tex" 1778632431 683 3401ae1cc3e7c1de88a893a7f6e3a51a ""
   "src/comparison_lax.png" 1778778577 86243 fb0b2da791d9603f4c4b5a78fe449d35 ""
   "src/convergence.png" 1778778582 117484 434d0ae89c658a870ab6e3372c42ab16 ""

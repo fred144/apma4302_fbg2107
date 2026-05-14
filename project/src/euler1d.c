@@ -494,7 +494,7 @@ static PetscErrorCode step(DM da, Vec Uglobal, Vec Unew,
 }
 
 /* ------------------------------------------------------------------ */
-/* main                                                                 */
+/* main     loop                                                            
 /* ------------------------------------------------------------------ */
 int main(int argc, char **argv)
 {
